@@ -20,13 +20,17 @@ export const routes = [
     handler: (req, res) => {
       const { title, description } = req.body;
 
+      if(!title || !description) {
+        throw new Error("Preencha todos os campos para criar uma task")
+      }
+
       const task = {
         id: randomUUID(),
         title,
         description,
-        completed_at: null,
+        updated_at: null,
         created_at: new Date(),
-        updated_at: null
+        completed_at: null
       }
   
       database.insert("tasks", task);
@@ -51,6 +55,10 @@ export const routes = [
     handler: (req, res) => {
       const { id } = req.params;
       const { title, description } = req.body;
+
+      if(!title || !description) {
+        throw new Error("Preencha todos os campos para realizar atualização.")
+      }
 
       database.update('tasks', id, {
         title,

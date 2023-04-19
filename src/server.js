@@ -1,6 +1,7 @@
 import http from "node:http";
 import { json } from "./middlewares/json.js";
 import { routes } from "./middlewares/routes.js";
+import { extractQueryParams } from "./utils/extract-query-params.js";
 
 const server = http.createServer(async (req, res) => {
   const { method, url } = req;
@@ -16,9 +17,12 @@ const server = http.createServer(async (req, res) => {
       throw new Error("Rota http não encontrada")
     }
     if (route) {
-      const routeParams = req.url.match(route.path)
+      const routeParams = req.url.match(route.path);
 
-      req.params = { ...routeParams.groups }
+      const { query, ...params } = routeParams.groups;
+
+      req.params = params;
+      req.query = query ? extractQueryParams(query) : {};
 
       return route.handler(req, res);
     }

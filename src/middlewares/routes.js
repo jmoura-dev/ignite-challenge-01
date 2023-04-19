@@ -9,7 +9,12 @@ export const routes = [
     method: 'GET',
     path: buildRoutePath('/tasks'),
     handler: (req, res) => {
-      const tasks = database.select("tasks")
+      const { search } = req.query;
+
+      const tasks = database.select("tasks", search ? {
+        title: search,
+        description: search
+      } : null)
 
       return res.end(JSON.stringify(tasks));
     }
@@ -65,6 +70,18 @@ export const routes = [
         description,
         updated_at: new Date(),
       });
+
+      return res.writeHead(204).end();
+    }
+  },
+  {
+    method: 'PATCH',
+    path: buildRoutePath('/tasks/:id/complete'),
+    handler: (req, res) => {
+      const { id } = req.params;
+      const { complete } = req.body;
+
+      database.oneUpdate('tasks', id, complete);
 
       return res.writeHead(204).end();
     }

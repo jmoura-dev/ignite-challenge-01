@@ -3,16 +3,16 @@ import fs from 'node:fs';
 
 const csvPath = new URL("./tasks.csv", import.meta.url);
 
-const stream = fs.createReadStream(csvPath);
+const Readstream = fs.createReadStream(csvPath);
 
-const csvParse = parse({
+const csvParseWrite = parse({
   delimiter: ',',
   skipEmptyLines: true,
   fromLine: 2
 });
 
 async function runStream() {
-  const linesParse = stream.pipe(csvParse);
+  const linesParse = Readstream.pipe(csvParseWrite);
 
   for await (const line of linesParse) {
     const [title, description] = line;

@@ -1,19 +1,24 @@
 ### API TO TASKS
 
 - Data:
-ID, Title, description, created_at, updated_at,
- completed_at
+
+    ID, Title, description, created_at, updated_at,
+    completed_at
 
 - Function:
-Create task;
 
-Upload task;
+    Importing csv-files to create task;
 
-Delete task;
+    Create task;
 
-To mark task as complete;
+    Upload task;
 
-Physical database;
+    Delete task;
+
+    To mark task as complete;
+
+    Physical database;
 
 - Tech:
-Nodejs frameworkless, Streams, Buffer;
+
+    Nodejs frameworkless, Streams, Buffer;
